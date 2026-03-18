@@ -1,0 +1,5 @@
+com\ejercicio\model\DocumentoInterno.class
+com\ejercicio\controller\DocumentoJpaController.class
+com\ejercicio\model\AbstractDocument.class
+com\ejercicio\controller\AbstractObjectJPAController.class
+com\ejercicio\model\EntityBase.class

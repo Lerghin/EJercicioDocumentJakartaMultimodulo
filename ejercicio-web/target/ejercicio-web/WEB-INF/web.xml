@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="5.0" xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd">
+    <display-name>Ejercicio PRHTA Practico</display-name>
+
+    <context-param>
+        <param-name>jakarta.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <context-param>
+        <param-name>jakarta.faces.FACELETS_SKIP_COMMENTS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <env-entry>
+        <env-entry-name>defaultLocale</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>en_US</env-entry-value>
+    </env-entry>
+
+    <env-entry>
+        <env-entry-name>jpa.persistenceUnitName</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>PU-Ejercicio</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>jpa.non-jta-data-source</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>jdbc/EjercicioDocumentos</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>jpa.eclipselink.target-server</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>Glassfish</env-entry-value>
+    </env-entry>
+    <env-entry>
+        <env-entry-name>jpa.eclipselink.target-database</env-entry-name>
+        <env-entry-type>java.lang.String</env-entry-type>
+        <env-entry-value>SQLServer</env-entry-value>
+    </env-entry>
+
+    <resource-ref>
+        <description>JDBC data source used by JPA</description>
+        <res-ref-name>jdbc/EjercicioDocumentos</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+    </resource-ref>
+
+    <listener>
+        <listener-class>com.ejercicio.singletons.ApplicationManager</listener-class>
+    </listener>
+
+    <welcome-file-list>
+        <welcome-file>index.xhtml</welcome-file>
+    </welcome-file-list>
+</web-app>

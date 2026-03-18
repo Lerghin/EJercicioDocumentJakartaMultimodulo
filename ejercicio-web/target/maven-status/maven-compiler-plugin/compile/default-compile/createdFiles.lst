@@ -1,0 +1,4 @@
+com\ejercicio\singletons\ApplicationManager.class
+com\ejercicio\web\SessionController.class
+com\ejercicio\singletons\ApplicationManagerBean.class
+com\ejercicio\web\DocumentoWebController.class

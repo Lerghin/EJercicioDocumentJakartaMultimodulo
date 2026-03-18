@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:body>
+    <ui:composition template="/view/template/template.xhtml">
+        <ui:define name="content">
+            <div class="card">
+                <h2>#{documento.singularName}</h2>
+                <h:form id="manageForm">
+                    <div class="form-group">
+                        <h:outputLabel for="nombre" value="#{documento.nombreLabel}"/>
+                        <h:inputText id="nombre" value="#{documentoWebController.selected.nombre}" required="true" requiredMessage="Requerido"/>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="departamento" value="#{documento.departamentoLabel}"/>
+                        <h:inputText id="departamento" value="#{documentoWebController.selected.departamento}"/>
+                    </div>
+                    <div class="form-group">
+                        <h:outputLabel for="estado" value="#{documento.estadoLabel}"/>
+                        <h:inputText id="estado" value="#{documentoWebController.selected.estado}"/>
+                    </div>
+                    <div class="button-group">
+                        <h:commandButton value="#{documento.saveLabel}" action="#{documentoWebController.save}" class="btn btn-primary"/>
+                        <h:button value="#{documento.cancelLabel}" outcome="list" class="btn btn-secondary"/>
+                    </div>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

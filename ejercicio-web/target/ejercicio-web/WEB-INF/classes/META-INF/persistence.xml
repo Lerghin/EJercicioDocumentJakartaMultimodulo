@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence persistence_3_0.xsd"
+             version="3.0">
+    <persistence-unit name="PU-Ejercicio" transaction-type="RESOURCE_LOCAL">
+        <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+        <class>com.ejercicio.model.EntityBase</class>
+        <class>com.ejercicio.model.AbstractDocument</class>
+        <class>com.ejercicio.model.DocumentoInterno</class>
+
+        <properties>
+            <property name="eclipselink.cache.shared.default" value="false"/>
+            <property name="eclipselink.persistence-context.flush-mode" value="commit"/>
+        </properties>
+    </persistence-unit>
+</persistence>
