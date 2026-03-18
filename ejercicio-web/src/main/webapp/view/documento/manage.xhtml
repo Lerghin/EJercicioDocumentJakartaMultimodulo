@@ -4,31 +4,66 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:body>
-    <ui:composition template="/view/template/template.xhtml">
-        <ui:define name="content">
-            <div class="card">
-                <h2>#{documento.singularName}</h2>
-                <h:form id="manageForm">
-                    <div class="form-group">
-                        <h:outputLabel for="nombre" value="#{documento.nombreLabel}"/>
-                        <h:inputText id="nombre" value="#{documentoWebController.selected.nombre}" required="true" requiredMessage="Requerido"/>
-                    </div>
-                    <div class="form-group">
-                        <h:outputLabel for="departamento" value="#{documento.departamentoLabel}"/>
-                        <h:inputText id="departamento" value="#{documentoWebController.selected.departamento}"/>
-                    </div>
-                    <div class="form-group">
-                        <h:outputLabel for="estado" value="#{documento.estadoLabel}"/>
-                        <h:inputText id="estado" value="#{documentoWebController.selected.estado}"/>
-                    </div>
-                    <div class="button-group">
-                        <h:commandButton value="#{documento.saveLabel}" action="#{documentoWebController.save}" class="btn btn-primary"/>
-                        <h:button value="#{documento.cancelLabel}" outcome="list" class="btn btn-secondary"/>
-                    </div>
-                </h:form>
-            </div>
-        </ui:define>
-    </ui:composition>
-</h:body>
+    <h:body>
+        <ui:composition template="/view/template/template.xhtml">
+            <ui:define name="content">
+                <div class="card">
+                    <h2>#{documento.singularName}</h2>
+                    <h:messages globalOnly="false" style="color:red; margin:20px;" />
+                    <h:form id="manageForm">
+                        <div class="form-group">
+                            <h:outputLabel for="tipo" value="Tipo de Documento:"/>
+                            <h:selectOneMenu id="tipo" value="#{documentoWebController.tipoDocumento}">
+                                <f:selectItem itemLabel="-- Seleccione Tipo Documento --" itemValue=""/>
+                                <f:selectItem itemLabel="INTERNO" itemValue="INTERNO"/>
+                                <f:selectItem itemLabel="EXTERNO" itemValue="EXTERNO"/> 
+                                <f:ajax listener="#{documentoWebController.cambiarTipo}" 
+                                        render="camposDinamicos" 
+                                        execute="@this" />
+                            </h:selectOneMenu>
+                        </div>
+
+                        <h:panelGroup id="camposDinamicos">
+                            <div class="form-group">
+                                <h:outputLabel for="nombre" value="#{documento.nombreLabel}"/>
+                                <h:inputText id="nombre" value="#{documentoWebController.selected.nombre}" required="true" requiredMessage="Requerido"/>
+                            </div>
+
+                            <h:panelGroup rendered="#{documentoWebController.tipoDocumento == 'INTERNO'}">
+                                <div class="form-group">
+                                    <h:outputLabel for="departamento" value="#{documento.departamentoLabel}"/>
+                                    <h:inputText id="departamento" value="#{documentoWebController.selected.departamento}"/>
+                                </div>
+                            </h:panelGroup>
+
+                            <h:panelGroup rendered="#{documentoWebController.tipoDocumento == 'EXTERNO'}">
+                                <div class="form-group">
+                                    <h:outputLabel for="proveedor" value="Proveedor:"/>
+                                    <h:inputText id="proveedor" value="#{documentoWebController.selected.proveedor}" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="nroReferencia" value="Nro. Referencia:"/>
+                                    <h:inputText id="nroReferencia" value="#{documentoWebController.selected.nroReferencia}" />
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="curier" value="Curier:"/>
+                                    <h:inputText id="curier" value="#{documentoWebController.selected.curier}" />
+                                </div>
+                            </h:panelGroup>
+
+                            <div class="form-group">
+                                <h:outputLabel for="estado" value="#{documento.estadoLabel}"/>
+                                <h:inputText id="estado" value="#{documentoWebController.selected.estado}"/>
+                            </div>
+                        </h:panelGroup>
+
+                        <div class="button-group">
+                            <h:commandButton value="#{documento.saveLabel}" action="#{documentoWebController.save}" class="btn btn-primary"/>
+                            <h:button value="#{documento.cancelLabel}" outcome="list" class="btn btn-secondary"/>
+                        </div>
+                    </h:form>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
 </html>

@@ -1,10 +1,13 @@
 package com.ejercicio.web;
 
 import com.ejercicio.controller.DocumentoJpaController;
+import com.ejercicio.model.AbstractDocument;
+import com.ejercicio.model.DocumentoExterno;
 import com.ejercicio.model.DocumentoInterno;
 import com.ejercicio.singletons.ApplicationManager;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
@@ -23,8 +26,10 @@ public class DocumentoWebController implements Serializable {
     private SessionController sessionController;
 
     private DocumentoJpaController jpaController;
-    private List<DocumentoInterno> items = new ArrayList<>();
-    private DocumentoInterno selected = new DocumentoInterno();
+    private List<AbstractDocument> items = new ArrayList<>();
+    private AbstractDocument selected = new DocumentoInterno();
+
+    private String tipoDocumento;
 
     @PostConstruct
     public void init() {
@@ -32,6 +37,7 @@ public class DocumentoWebController implements Serializable {
         loadItems();
     }
 
+    /*
     public void loadItems() {
         items = new ArrayList<>();
         for (var d : jpaController.findAll()) {
@@ -40,11 +46,22 @@ public class DocumentoWebController implements Serializable {
             }
         }
     }
+/*
+    // voy a traerme todos los documentos, luego le hago un filtro con select
+    
+    
+
+     */
+    public void loadItems() {
+        items = jpaController.findAll();
+    }
 
     public String create() {
         try {
             selected.setFecha(new Date());
-            if (selected.getEstado() == null) selected.setEstado("ACTIVO");
+            if (selected.getEstado() == null) {
+                selected.setEstado("ACTIVO");
+            }
             jpaController.create(selected);
             ApplicationManager.getInstance().registrarDocumentoCreado(selected.getNombre());
             selected = new DocumentoInterno();
@@ -92,15 +109,50 @@ public class DocumentoWebController implements Serializable {
         return "manage?faces-redirect=true";
     }
 
-    public List<DocumentoInterno> getItems() {
+    public void cambiarTipo() {
+
+        System.out.println("Cambiando tipo a: " + tipoDocumento);
+        if ("INTERNO".equals(tipoDocumento)) {
+            this.selected = new DocumentoInterno();
+        } else if ("EXTERNO".equals(tipoDocumento)) {
+            this.selected = new DocumentoExterno();
+        } else {
+            this.selected = new DocumentoInterno();
+        }
+        // 3. Limpiar los mensajes de error previos 
+        jakarta.faces.context.FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(false);
+    }
+
+    public boolean esInterno(Object doc) {
+        return doc instanceof DocumentoInterno;
+    }
+
+    public boolean esExterno(Object doc) {
+        return doc instanceof DocumentoExterno;
+    }
+
+    public List<AbstractDocument> getItems() {
         return items;
     }
 
-    public DocumentoInterno getSelected() {
+    public void setItems(List<AbstractDocument> items) {
+        this.items = items;
+    }
+
+    public AbstractDocument getSelected() {
         return selected;
     }
 
-    public void setSelected(DocumentoInterno selected) {
+    public void setSelected(AbstractDocument selected) {
         this.selected = selected;
     }
+
+    public String getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(String tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
+
 }

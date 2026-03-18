@@ -27,9 +27,8 @@ public class DocumentoExterno extends AbstractDocument implements Serializable {
     @Column(name = "curier", length = 64)
     protected String curier;
 
-    @Override
-    protected String getTipoDocumento() {
-        return "EXTERNO";
+    public DocumentoExterno() {
+        super();
     }
 
     public DocumentoExterno(String proveedor, String nroReferencia, String curier) {
@@ -39,8 +38,9 @@ public class DocumentoExterno extends AbstractDocument implements Serializable {
         this.curier = curier;
     }
 
-    public DocumentoExterno() {
-        super();
+    @Override
+    protected String getTipoDocumento() {
+        return "EXTERNO";
     }
 
     public String getProveedor() {
@@ -66,7 +66,5 @@ public class DocumentoExterno extends AbstractDocument implements Serializable {
     public void setCurier(String curier) {
         this.curier = curier;
     }
-
-  
 
 }

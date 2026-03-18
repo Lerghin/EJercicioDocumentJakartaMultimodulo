@@ -8,7 +8,6 @@ CREATE TABLE TECDocument (
 );
 
 ALTER TABLE TECDocument 
-ADD proveedor Varchar(64)NULL,
+ADD Proveedor VARCHAR(64) NULL,
     Numero_Referencia VARCHAR(64) NULL,
-    curier VARCHAR(64) NULL,
-GO
+    curier VARCHAR(64) NULL;

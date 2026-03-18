@@ -9,6 +9,7 @@
         <class>com.ejercicio.model.EntityBase</class>
         <class>com.ejercicio.model.AbstractDocument</class>
         <class>com.ejercicio.model.DocumentoInterno</class>
+         <class>com.ejercicio.model.DocumentoExterno</class>
 
         <properties>
             <property name="eclipselink.cache.shared.default" value="false"/>
