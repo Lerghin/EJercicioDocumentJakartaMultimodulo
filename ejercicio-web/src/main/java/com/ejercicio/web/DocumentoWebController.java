@@ -64,7 +64,9 @@ public class DocumentoWebController implements Serializable {
             }
             jpaController.create(selected);
             ApplicationManager.getInstance().registrarDocumentoCreado(selected.getNombre());
-            selected = new DocumentoInterno();
+            this.selected = new DocumentoInterno();
+            this.tipoDocumento = null;
+
             loadItems();
             return "list?faces-redirect=true";
         } catch (Exception e) {
@@ -100,7 +102,11 @@ public class DocumentoWebController implements Serializable {
     }
 
     public String prepareCreate() {
+        this.tipoDocumento = null;
+
         selected = new DocumentoInterno();
+        // Es vital limpiar también los mensajes de la sesión anterior
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(false);
         return "manage?faces-redirect=true";
     }
 
@@ -110,17 +116,26 @@ public class DocumentoWebController implements Serializable {
     }
 
     public void cambiarTipo() {
+        // 1. Guardamos la referencia vieja para no perder los datos comunes
+        AbstractDocument datosLlenados = this.selected;
 
-        System.out.println("Cambiando tipo a: " + tipoDocumento);
-        if ("INTERNO".equals(tipoDocumento)) {
-            this.selected = new DocumentoInterno();
-        } else if ("EXTERNO".equals(tipoDocumento)) {
+        // 2. Creamos la nueva instancia según el tipo
+        if ("EXTERNO".equals(tipoDocumento)) {
             this.selected = new DocumentoExterno();
         } else {
             this.selected = new DocumentoInterno();
         }
-        // 3. Limpiar los mensajes de error previos 
-        jakarta.faces.context.FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(false);
+
+        //Mantener datos prellenados por si cambia de form
+        if (datosLlenados != null) {
+            this.selected.setNombre(datosLlenados.getNombre());
+            this.selected.setEstado(datosLlenados.getEstado());
+            this.selected.setFecha(datosLlenados.getFecha());
+
+        }
+
+        // 4. Limpieza de mensajes (Correcto como lo tenías)
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(false);
     }
 
     public boolean esInterno(Object doc) {
@@ -140,6 +155,12 @@ public class DocumentoWebController implements Serializable {
     }
 
     public AbstractDocument getSelected() {
+
+        if ("EXTERNO".equals(tipoDocumento) && !(selected instanceof DocumentoExterno)) {
+            selected = new DocumentoExterno();
+        } else if ("INTERNO".equals(tipoDocumento) && !(selected instanceof DocumentoInterno)) {
+            selected = new DocumentoInterno();
+        }
         return selected;
     }
 

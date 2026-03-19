@@ -19,37 +19,19 @@
                                 <f:selectItem itemLabel="EXTERNO" itemValue="EXTERNO"/> 
                                 <f:ajax listener="#{documentoWebController.cambiarTipo}" 
                                         render="camposDinamicos" 
-                                        execute="@this" />
+                                        execute="@this nombre estado" />
                             </h:selectOneMenu>
                         </div>
 
-                        <h:panelGroup id="camposDinamicos">
+                        <h:panelGroup id="camposDinamicos" layout="block">
                             <div class="form-group">
                                 <h:outputLabel for="nombre" value="#{documento.nombreLabel}"/>
-                                <h:inputText id="nombre" value="#{documentoWebController.selected.nombre}" required="true" requiredMessage="Requerido"/>
+                                <h:inputText id="nombre" value="#{documentoWebController.selected.nombre}" required="true"/>
                             </div>
 
-                            <h:panelGroup rendered="#{documentoWebController.tipoDocumento == 'INTERNO'}">
-                                <div class="form-group">
-                                    <h:outputLabel for="departamento" value="#{documento.departamentoLabel}"/>
-                                    <h:inputText id="departamento" value="#{documentoWebController.selected.departamento}"/>
-                                </div>
-                            </h:panelGroup>
-
-                            <h:panelGroup rendered="#{documentoWebController.tipoDocumento == 'EXTERNO'}">
-                                <div class="form-group">
-                                    <h:outputLabel for="proveedor" value="Proveedor:"/>
-                                    <h:inputText id="proveedor" value="#{documentoWebController.selected.proveedor}" />
-                                </div>
-                                <div class="form-group">
-                                    <h:outputLabel for="nroReferencia" value="Nro. Referencia:"/>
-                                    <h:inputText id="nroReferencia" value="#{documentoWebController.selected.nroReferencia}" />
-                                </div>
-                                <div class="form-group">
-                                    <h:outputLabel for="curier" value="Curier:"/>
-                                    <h:inputText id="curier" value="#{documentoWebController.selected.curier}" />
-                                </div>
-                            </h:panelGroup>
+                            <ui:fragment rendered="#{not empty documentoWebController.tipoDocumento}">
+                               <ui:include src="fragments/#{documentoWebController.tipoDocumento.toLowerCase()}Form.xhtml" />
+                            </ui:fragment>
 
                             <div class="form-group">
                                 <h:outputLabel for="estado" value="#{documento.estadoLabel}"/>
