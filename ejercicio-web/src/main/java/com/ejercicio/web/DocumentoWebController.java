@@ -28,7 +28,6 @@ public class DocumentoWebController implements Serializable {
     private DocumentoJpaController jpaController;
     private List<AbstractDocument> items = new ArrayList<>();
     private AbstractDocument selected = new DocumentoInterno();
-
     private String tipoDocumento;
 
     @PostConstruct
@@ -110,8 +109,17 @@ public class DocumentoWebController implements Serializable {
         return "manage?faces-redirect=true";
     }
 
-    public String prepareEdit(DocumentoInterno doc) {
-        selected = doc;
+    public String prepareEdit(Object obj) {
+        System.out.println("Objeto recibido"+ obj.getClass().getName());
+        
+        if(obj instanceof DocumentoInterno){
+            this.selected = (DocumentoInterno) obj;
+            this.tipoDocumento="INTERNO";
+            
+        }else if(obj instanceof DocumentoExterno){
+            this.selected = (DocumentoExterno) obj;
+            this.tipoDocumento="EXTERNO";
+        }
         return "manage?faces-redirect=true";
     }
 
