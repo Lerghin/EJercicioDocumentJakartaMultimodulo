@@ -27,6 +27,7 @@ public abstract class AbstractDocument extends EntityBase implements Serializabl
     private static final long serialVersionUID = 1L;
 
     public static final String PORTAL_TABLE_NAME = "TECDocument";
+    
 
     @Basic(optional = false)
     @NotNull
@@ -52,9 +53,23 @@ public abstract class AbstractDocument extends EntityBase implements Serializabl
 
     protected abstract String getTipoDocumento();
 
-    public String getDescripcionCompleta() {
-        return getTipoDocumento() + " - " + nombre + " (" + estado + ")";
+    private static final String SEPARADOR_CAMPOS = " | ";
+
+    public final String getDescripcionCompleta() {
+        return getPrefijoDescripcion()
+                + SEPARADOR_CAMPOS
+                + getTipoDocumento()
+                + SEPARADOR_CAMPOS
+                + nombre
+                + SEPARADOR_CAMPOS
+                + getDetalleDescripcion()
+                + " (" + estado + ")";
     }
+
+    protected abstract String getPrefijoDescripcion();
+
+    protected abstract String getDetalleDescripcion();
+    public abstract String getDetalleListado();
 
     @Override
     public String getTableName() {
@@ -96,7 +111,9 @@ public abstract class AbstractDocument extends EntityBase implements Serializabl
 
     @Override
     public boolean equals(Object obj) {
-        if (!super.equals(obj)) return false;
+        if (!super.equals(obj)) {
+            return false;
+        }
         AbstractDocument other = (AbstractDocument) obj;
         return Objects.equals(nombre, other.nombre)
                 && Objects.equals(fecha, other.fecha)

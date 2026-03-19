@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <div id="detailModal" class="modal-overlay" style="display:none;">
+        <div class="modal-box">
+
+            <div class="modal-header">
+                <h3>Detalle del Documento</h3>
+                <button type="button" onclick="hideModal()" class="btn-close">✕</button>
+            </div>
+
+            <div class="modal-body">
+
+                <p>
+                    <strong>Detalle:</strong>
+                    <h:outputText value="#{documentoWebController.selected.detalleListado}"/>
+                </p>
+
+                <p>
+                    <strong>Descripción Completa:</strong>
+                    <h:outputText value="#{documentoWebController.selected.descripcionCompleta}"/>
+                </p>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" onclick="hideModal()" class="btn btn-secondary">
+                    Cerrar
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <h:outputStylesheet library="css" name="modal.css"/>
+    <h:outputScript library="js" name="modal.js"/>  
+</ui:composition>

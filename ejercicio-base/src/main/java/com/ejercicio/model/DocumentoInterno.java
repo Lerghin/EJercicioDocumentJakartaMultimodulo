@@ -32,4 +32,19 @@ public class DocumentoInterno extends AbstractDocument implements Serializable {
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
     }
+
+    @Override
+    protected String getPrefijoDescripcion() {
+       return "INT-";
+    }
+
+    @Override
+    protected String getDetalleDescripcion() {
+     return "Uso interno - Área: " + departamento;
+    }
+
+    @Override
+    public String getDetalleListado() {
+       return "El departame es: "+ departamento;
+    }
 }

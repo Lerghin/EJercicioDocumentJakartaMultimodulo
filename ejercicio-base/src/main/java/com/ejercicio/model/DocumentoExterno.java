@@ -67,4 +67,19 @@ public class DocumentoExterno extends AbstractDocument implements Serializable {
         this.curier = curier;
     }
 
+    @Override
+    protected String getPrefijoDescripcion() {
+       return "EXT-";
+    }
+
+    @Override
+    protected String getDetalleDescripcion() {
+        return "Es un documento recibido por: " + proveedor;
+    }
+
+    @Override
+    public String getDetalleListado() {
+      return "El proveedor es: "+proveedor;
+    }
+
 }

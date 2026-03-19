@@ -153,6 +153,10 @@ public class DocumentoWebController implements Serializable {
         // 4. Limpieza de mensajes (Correcto como lo tenías)
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(false);
     }
+    
+    public void prepareDetalle(AbstractDocument doc){
+        this.selected = doc;
+    }
 
     public boolean esInterno(Object doc) {
         return doc instanceof DocumentoInterno;

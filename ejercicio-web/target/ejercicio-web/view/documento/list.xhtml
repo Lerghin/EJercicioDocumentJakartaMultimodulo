@@ -35,8 +35,21 @@
                             <h:column>
                                 <f:facet name="header"/>
                                 <h:commandButton value="Edit" action="#{documentoWebController.prepareEdit(doc)}" class="btn btn-secondary"/>
+                                <h:commandButton
+                                    value="Detalles"
+                                    class="btn btn-info"
+                                    onclick="setTimeout(showModal, 300)">
+                                    <f:ajax execute="@this"
+                                            listener="#{documentoWebController.prepareDetalle(doc)}"
+                                            render="detailPanel"/>
+                                </h:commandButton>
                             </h:column>
                         </h:dataTable>
+                        <h:panelGroup id="detailPanel">
+                            <h:panelGroup rendered="#{documentoWebController.selected != null}">
+                                <ui:include src="/view/documento/fragments/detailModal.xhtml"/>
+                            </h:panelGroup>
+                        </h:panelGroup>
                     </h:form>
                 </div>
             </ui:define>
