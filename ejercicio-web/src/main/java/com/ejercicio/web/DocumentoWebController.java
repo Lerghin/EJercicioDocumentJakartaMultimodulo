@@ -27,7 +27,7 @@ public class DocumentoWebController implements Serializable {
 
     private DocumentoJpaController jpaController;
     private List<AbstractDocument> items = new ArrayList<>();
-    private AbstractDocument selected = new DocumentoInterno();
+    private AbstractDocument selected;
     private String tipoDocumento;
 
     @PostConstruct
@@ -55,16 +55,27 @@ public class DocumentoWebController implements Serializable {
         items = jpaController.findAll();
     }
 
+    private void instanciarSeleccionado() {
+        if ("EXTERNO".equals(this.tipoDocumento)) {
+            this.selected = new DocumentoExterno();
+        } else {
+            this.selected = new DocumentoInterno();
+            this.tipoDocumento = "INTERNO"; // Default seguro
+        }
+    }
+
     public String create() {
         try {
+            
             selected.setFecha(new Date());
             if (selected.getEstado() == null) {
                 selected.setEstado("ACTIVO");
             }
+           // selected.getClass().getName();
             jpaController.create(selected);
             ApplicationManager.getInstance().registrarDocumentoCreado(selected.getNombre());
-            this.selected = new DocumentoInterno();
-            this.tipoDocumento = null;
+            //this.selected = new DocumentoInterno();
+            // this.tipoDocumento = null;
 
             loadItems();
             return "list?faces-redirect=true";
@@ -101,25 +112,22 @@ public class DocumentoWebController implements Serializable {
     }
 
     public String prepareCreate() {
-        this.tipoDocumento = null;
+        this.tipoDocumento = "INTERNO";
 
-        selected = new DocumentoInterno();
+       instanciarSeleccionado();
         // Es vital limpiar también los mensajes de la sesión anterior
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(false);
         return "manage?faces-redirect=true";
     }
 
     public String prepareEdit(Object obj) {
-        System.out.println("Objeto recibido"+ obj.getClass().getName());
-        
-        if(obj instanceof DocumentoInterno){
-            this.selected = (DocumentoInterno) obj;
-            this.tipoDocumento="INTERNO";
-            
-        }else if(obj instanceof DocumentoExterno){
-            this.selected = (DocumentoExterno) obj;
-            this.tipoDocumento="EXTERNO";
-        }
+
+       if (obj == null) return null;
+
+    this.selected = (AbstractDocument) obj;
+
+    // Sincronizamos el String para el ui:include
+    this.tipoDocumento = (this.selected instanceof DocumentoExterno) ? "EXTERNO" : "INTERNO";
         return "manage?faces-redirect=true";
     }
 
@@ -163,12 +171,6 @@ public class DocumentoWebController implements Serializable {
     }
 
     public AbstractDocument getSelected() {
-
-        if ("EXTERNO".equals(tipoDocumento) && !(selected instanceof DocumentoExterno)) {
-            selected = new DocumentoExterno();
-        } else if ("INTERNO".equals(tipoDocumento) && !(selected instanceof DocumentoInterno)) {
-            selected = new DocumentoInterno();
-        }
         return selected;
     }
 

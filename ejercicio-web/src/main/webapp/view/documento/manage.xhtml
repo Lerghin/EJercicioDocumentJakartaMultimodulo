@@ -14,12 +14,11 @@
                         <div class="form-group">
                             <h:outputLabel for="tipo" value="Tipo de Documento:"/>
                             <h:selectOneMenu id="tipo" value="#{documentoWebController.tipoDocumento}">
-                                <f:selectItem itemLabel="-- Seleccione Tipo Documento --" itemValue=""/>
                                 <f:selectItem itemLabel="INTERNO" itemValue="INTERNO"/>
-                                <f:selectItem itemLabel="EXTERNO" itemValue="EXTERNO"/> 
+                                <f:selectItem itemLabel="EXTERNO" itemValue="EXTERNO"/>
                                 <f:ajax listener="#{documentoWebController.cambiarTipo}" 
-                                        render="camposDinamicos" 
-                                        execute="@this nombre estado" />
+                                        execute="@this" 
+                                        render="camposDinamicos" />
                             </h:selectOneMenu>
                         </div>
 
@@ -30,7 +29,7 @@
                             </div>
 
                             <ui:fragment rendered="#{not empty documentoWebController.tipoDocumento}">
-                               <ui:include src="fragments/#{documentoWebController.tipoDocumento.toLowerCase()}Form.xhtml" />
+                                <ui:include src="fragments/#{documentoWebController.tipoDocumento.toLowerCase()}Form.xhtml" />
                             </ui:fragment>
 
                             <div class="form-group">
