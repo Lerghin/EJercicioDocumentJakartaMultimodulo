@@ -4,6 +4,7 @@ import com.ejercicio.controller.DocumentoJpaController;
 import com.ejercicio.model.AbstractDocument;
 import com.ejercicio.model.DocumentoExterno;
 import com.ejercicio.model.DocumentoInterno;
+import com.ejercicio.model.DocumentoLegal;
 import com.ejercicio.controller.TipoDocumentoController;
 import com.ejercicio.model.TipoDocumento;
 import com.ejercicio.singletons.ApplicationManager;
@@ -168,9 +169,14 @@ public class DocumentoWebController implements Serializable {
     public void cambiarTipo() {
         AbstractDocument datosAnteriores = this.selected;
         try {
-            TipoDocumento tipo = tipoDocumentoController.findByCodigo(tipoDocumento);
-            Class<?> clazz = Class.forName(tipo.getClaseJava());
-            this.selected = (AbstractDocument) clazz.getDeclaredConstructor().newInstance();
+            if ("INTERNO".equalsIgnoreCase(tipoDocumento)) {
+                this.selected = new DocumentoInterno();
+            } else if (tipoDocumento.equalsIgnoreCase("EXTERNO")) {
+                this.selected = new DocumentoExterno();
+            } else if (tipoDocumento.equalsIgnoreCase("LEGAL")) {
+                this.selected = new DocumentoLegal();
+            }
+
         } catch (Exception e) {
             throw new RuntimeException("NO se pudo cambiar de tipo de documento");
         }

@@ -5,6 +5,7 @@
 package com.ejercicio.controller;
 
 import com.ejercicio.model.AbstractDocument;
+import com.ejercicio.model.DocumentoInterno;
 import com.ejercicio.model.TipoDocumento;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -28,12 +29,4 @@ public class TipoDocumentoController extends AbstractObjectJPAController<TipoDoc
         return q.getResultList();
     }
 
-    public TipoDocumento findByCodigo(String codigo) {
-        TypedQuery<TipoDocumento> q = em.createQuery(
-                "SELECT t FROM TipoDocumento t "
-                + "WHERE t.codigo = :codigo",
-                TipoDocumento.class);
-        q.setParameter("codigo", codigo);
-        return q.getSingleResult();
-    }
 }
