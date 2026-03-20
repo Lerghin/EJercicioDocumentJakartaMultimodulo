@@ -10,7 +10,6 @@
         <class>com.ejercicio.model.AbstractDocument</class>
         <class>com.ejercicio.model.DocumentoInterno</class>
         <class>com.ejercicio.model.DocumentoExterno</class>
-        <class>com.ejercicio.model.TipoDocumento</class>
         <class>com.ejercicio.model.DocumentoLegal</class>
 
         <properties>

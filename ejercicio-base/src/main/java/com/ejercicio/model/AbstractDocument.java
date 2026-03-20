@@ -15,6 +15,7 @@ import jakarta.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -70,6 +71,7 @@ public abstract class AbstractDocument extends EntityBase implements Serializabl
 
     protected abstract String getDetalleDescripcion();
     public abstract String getDetalleListado();
+   
 
     @Override
     public String getTableName() {

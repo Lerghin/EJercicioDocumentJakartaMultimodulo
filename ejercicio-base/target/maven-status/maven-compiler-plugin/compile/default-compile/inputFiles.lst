@@ -1,9 +1,8 @@
 C:\Users\lergh\Documents\gabrielEjercicio2\ejercicio-prhta-practico\ejercicio-base\src\main\java\com\ejercicio\controller\AbstractObjectJPAController.java
 C:\Users\lergh\Documents\gabrielEjercicio2\ejercicio-prhta-practico\ejercicio-base\src\main\java\com\ejercicio\controller\DocumentoJpaController.java
-C:\Users\lergh\Documents\gabrielEjercicio2\ejercicio-prhta-practico\ejercicio-base\src\main\java\com\ejercicio\controller\TipoDocumentoController.java
 C:\Users\lergh\Documents\gabrielEjercicio2\ejercicio-prhta-practico\ejercicio-base\src\main\java\com\ejercicio\model\AbstractDocument.java
 C:\Users\lergh\Documents\gabrielEjercicio2\ejercicio-prhta-practico\ejercicio-base\src\main\java\com\ejercicio\model\DocumentoExterno.java
 C:\Users\lergh\Documents\gabrielEjercicio2\ejercicio-prhta-practico\ejercicio-base\src\main\java\com\ejercicio\model\DocumentoInterno.java
 C:\Users\lergh\Documents\gabrielEjercicio2\ejercicio-prhta-practico\ejercicio-base\src\main\java\com\ejercicio\model\DocumentoLegal.java
 C:\Users\lergh\Documents\gabrielEjercicio2\ejercicio-prhta-practico\ejercicio-base\src\main\java\com\ejercicio\model\EntityBase.java
-C:\Users\lergh\Documents\gabrielEjercicio2\ejercicio-prhta-practico\ejercicio-base\src\main\java\com\ejercicio\model\TipoDocumento.java
+C:\Users\lergh\Documents\gabrielEjercicio2\ejercicio-prhta-practico\ejercicio-base\src\main\java\com\ejercicio\model\TipoDocumentoEnum.java

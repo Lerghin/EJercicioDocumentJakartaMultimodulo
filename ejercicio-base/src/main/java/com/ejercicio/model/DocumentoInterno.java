@@ -5,9 +5,10 @@ import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@DiscriminatorValue("INTERNO")
+@DiscriminatorValue(TipoDocumentoEnum.INTERNO_VAL)
 public class DocumentoInterno extends AbstractDocument implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -22,7 +23,7 @@ public class DocumentoInterno extends AbstractDocument implements Serializable {
 
     @Override
     public String getTipoDocumento() {
-        return "INTERNO";
+        return TipoDocumentoEnum.INTERNO_VAL;
     }
 
     public String getDepartamento() {
@@ -35,16 +36,16 @@ public class DocumentoInterno extends AbstractDocument implements Serializable {
 
     @Override
     protected String getPrefijoDescripcion() {
-       return "INT-";
+        return "INT-";
     }
 
     @Override
     protected String getDetalleDescripcion() {
-     return "Uso interno - Área: " + departamento;
+        return "Uso interno - Área: " + departamento;
     }
 
     @Override
     public String getDetalleListado() {
-       return "El departame es: "+ departamento;
+        return "El departame es: " + departamento;
     }
 }

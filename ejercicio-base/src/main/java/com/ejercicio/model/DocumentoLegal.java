@@ -8,13 +8,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
  * @author lergh
  */
 @Entity
-@DiscriminatorValue("LEGAL")
+@DiscriminatorValue(TipoDocumentoEnum.LEGAL_VAL)
 public class DocumentoLegal extends AbstractDocument implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,7 +48,7 @@ public class DocumentoLegal extends AbstractDocument implements Serializable {
 
     @Override
     public String getTipoDocumento() {
-      return "LEGAL";
+        return TipoDocumentoEnum.LEGAL_VAL;
     }
 
     @Override
@@ -64,5 +65,6 @@ public class DocumentoLegal extends AbstractDocument implements Serializable {
     public String getDetalleListado() {
         return "Es el expediente nro #" + numeroExpediente;
     }
+
 
 }

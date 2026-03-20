@@ -11,42 +11,101 @@
                     <h2>#{documento.singularName}</h2>
                     <h:messages globalOnly="false" style="color:red; margin:20px;" />
                     <h:form id="manageForm">
+
+                        <!-- Tipo -->
                         <div class="form-group">
                             <h:outputLabel for="tipo" value="Tipo de Documento:"/>
-                            <h:selectOneMenu id="tipo" 
+                            <h:selectOneMenu id="tipo"
                                              value="#{documentoWebController.tipoDocumento}">
                                 <f:selectItem itemLabel="Seleccione..." itemValue=""/>
-                                <f:selectItems 
+                                <f:selectItems
                                     value="#{documentoWebController.tiposDocumento}"
                                     var="tipo"
-                                    itemLabel="#{tipo.nombre}"
-                                    itemValue="#{tipo.codigo}"/>
-                                <f:ajax listener="#{documentoWebController.cambiarTipo}" 
-                                        execute="@this" 
+                                    itemLabel="#{tipo.name()}"
+                                    itemValue="#{tipo.name()}"/>
+                                <f:ajax listener="#{documentoWebController.cambiarTipo}"
+                                        execute="@this"
                                         render="camposDinamicos"/>
                             </h:selectOneMenu>
                         </div>
 
                         <h:panelGroup id="camposDinamicos" layout="block">
+
+                            <!-- Campos base -->
                             <div class="form-group">
                                 <h:outputLabel for="nombre" value="#{documento.nombreLabel}"/>
-                                <h:inputText id="nombre" value="#{documentoWebController.selected.nombre}" required="true"/>
+                                <h:inputText id="nombre"
+                                             value="#{documentoWebController.selected.nombre}"
+                                             required="true"/>
                             </div>
 
-                            <ui:fragment rendered="#{not empty documentoWebController.tipoDocumento}">
-                                <ui:include src="fragments/#{documentoWebController.tipoDocumento.toLowerCase()}Form.xhtml" />
-                            </ui:fragment>
+                            <!-- EXTERNO -->
+                            <h:panelGroup
+                                rendered="#{documentoWebController.isInstanceOfDocumentExtern()}"
+                                layout="block">
+                                <div class="form-group">
+                                    <h:outputLabel for="proveedor" value="#{documento.proveedorLabel}"/>
+                                    <h:inputText id="proveedor"
+                                                 value="#{documentoWebController.selected.proveedor}"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="nroRef" value="#{documento.nroReferenciaLabel}"/>
+                                    <h:inputText id="nroRef"
+                                                 value="#{documentoWebController.selected.nroReferencia}"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="curier" value="#{documento.curierLabel}"/>
+                                    <h:inputText id="curier"
+                                                 value="#{documentoWebController.selected.curier}"/>
+                                </div>
+                            </h:panelGroup>
 
+                            <!-- INTERNO -->
+                            <h:panelGroup
+                                rendered="#{documentoWebController.isInstanceOfDocumentIntern()}"
+                                layout="block">
+                                <div class="form-group">
+                                    <h:outputLabel for="depto" value="#{documento.departamentoLabel}"/>
+                                    <h:inputText id="depto"
+                                                 value="#{documentoWebController.selected.departamento}"/>
+                                </div>
+                            </h:panelGroup>
+
+                            <!-- LEGAL -->
+                            <h:panelGroup
+                                rendered="#{documentoWebController.isInstanceOfDocumentLegal()}"
+                                layout="block">
+                                <div class="form-group">
+                                    <h:outputLabel for="expediente" value="#{documento.numeroExpedienteLabel}"/>
+                                    <h:inputText id="expediente"
+                                                 value="#{documentoWebController.selected.numeroExpediente}"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="juzgado" value="#{documento.juzgadoLabel}"/>
+                                    <h:inputText id="juzgado"
+                                                 value="#{documentoWebController.selected.juzgado}"/>
+                                </div>
+                            </h:panelGroup>
+
+                            <!-- Estado -->
                             <div class="form-group">
                                 <h:outputLabel for="estado" value="#{documento.estadoLabel}"/>
-                                <h:inputText id="estado" value="#{documentoWebController.selected.estado}"/>
+                                <h:inputText id="estado"
+                                             value="#{documentoWebController.selected.estado}"/>
                             </div>
+
                         </h:panelGroup>
 
+                        <!-- Botones -->
                         <div class="button-group">
-                            <h:commandButton value="#{documento.saveLabel}" action="#{documentoWebController.save}" class="btn btn-primary"/>
-                            <h:button value="#{documento.cancelLabel}" outcome="list" class="btn btn-secondary"/>
+                            <h:commandButton value="#{documento.saveLabel}"
+                                             action="#{documentoWebController.save}"
+                                             class="btn btn-primary"/>
+                            <h:button value="#{documento.cancelLabel}"
+                                      outcome="list"
+                                      class="btn btn-secondary"/>
                         </div>
+
                     </h:form>
                 </div>
             </ui:define>

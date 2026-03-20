@@ -8,6 +8,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -15,7 +16,7 @@ import java.io.Serializable;
  */
 @Entity
 //Configurar @DiscriminatorValue("EXTERNO").
-@DiscriminatorValue("EXTERNO")
+@DiscriminatorValue(TipoDocumentoEnum.EXTERNO_VAL)
 public class DocumentoExterno extends AbstractDocument implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,7 +41,7 @@ public class DocumentoExterno extends AbstractDocument implements Serializable {
 
     @Override
     public String getTipoDocumento() {
-        return "EXTERNO";
+        return TipoDocumentoEnum.EXTERNO_VAL;
     }
 
     public String getProveedor() {
@@ -69,7 +70,7 @@ public class DocumentoExterno extends AbstractDocument implements Serializable {
 
     @Override
     protected String getPrefijoDescripcion() {
-       return "EXT-";
+        return "EXT-";
     }
 
     @Override
@@ -79,7 +80,8 @@ public class DocumentoExterno extends AbstractDocument implements Serializable {
 
     @Override
     public String getDetalleListado() {
-      return "El proveedor es: "+proveedor;
+        return "El proveedor es: " + proveedor;
     }
+
 
 }
