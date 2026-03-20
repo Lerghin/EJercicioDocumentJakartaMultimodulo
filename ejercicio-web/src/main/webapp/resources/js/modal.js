@@ -10,3 +10,10 @@ function hideModal() {
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') hideModal();
 });
+
+function handleModalEvent(data) {
+    console.log('Estado ajax:', data.status);
+    if (data.status === 'complete') {
+        setTimeout(showModal, 50);
+    }
+}

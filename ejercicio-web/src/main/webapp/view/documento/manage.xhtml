@@ -13,12 +13,17 @@
                     <h:form id="manageForm">
                         <div class="form-group">
                             <h:outputLabel for="tipo" value="Tipo de Documento:"/>
-                            <h:selectOneMenu id="tipo" value="#{documentoWebController.tipoDocumento}">
-                                <f:selectItem itemLabel="INTERNO" itemValue="INTERNO"/>
-                                <f:selectItem itemLabel="EXTERNO" itemValue="EXTERNO"/>
+                            <h:selectOneMenu id="tipo" 
+                                             value="#{documentoWebController.tipoDocumento}">
+                                <f:selectItem itemLabel="Seleccione..." itemValue=""/>
+                                <f:selectItems 
+                                    value="#{documentoWebController.tiposDocumento}"
+                                    var="tipo"
+                                    itemLabel="#{tipo.nombre}"
+                                    itemValue="#{tipo.codigo}"/>
                                 <f:ajax listener="#{documentoWebController.cambiarTipo}" 
                                         execute="@this" 
-                                        render="camposDinamicos" />
+                                        render="camposDinamicos"/>
                             </h:selectOneMenu>
                         </div>
 

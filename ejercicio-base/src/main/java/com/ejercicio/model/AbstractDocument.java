@@ -51,7 +51,7 @@ public abstract class AbstractDocument extends EntityBase implements Serializabl
         this.estado = "ACTIVO";
     }
 
-    protected abstract String getTipoDocumento();
+    public abstract String getTipoDocumento();
 
     private static final String SEPARADOR_CAMPOS = " | ";
 

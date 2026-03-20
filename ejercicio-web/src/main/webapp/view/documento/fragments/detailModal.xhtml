@@ -1,3 +1,4 @@
+
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
@@ -11,27 +12,34 @@
             </div>
 
             <div class="modal-body">
-
+                <p>
+                    <strong>Nombre:</strong>
+                    <h:outputText value="#{documentoWebController.selected.nombre}"/>
+                </p>
+                <p>
+                    <strong>Fecha:</strong>
+                    <h:outputText value="#{documentoWebController.selected.fecha}"/>
+                </p>
+                <p>
+                    <strong>Estado:</strong>
+                    <h:outputText value="#{documentoWebController.selected.estado}"/>
+                </p>
                 <p>
                     <strong>Detalle:</strong>
                     <h:outputText value="#{documentoWebController.selected.detalleListado}"/>
                 </p>
-
                 <p>
-                    <strong>Descripción Completa:</strong>
+                    <strong>Descripción:</strong>
                     <h:outputText value="#{documentoWebController.selected.descripcionCompleta}"/>
                 </p>
             </div>
 
             <div class="modal-footer">
-                <button type="button" onclick="hideModal()" class="btn btn-secondary">
-                    Cerrar
-                </button>
+                <button type="button" onclick="hideModal()" 
+                        class="btn btn-secondary">Cerrar</button>
             </div>
 
         </div>
     </div>
 
-    <h:outputStylesheet library="css" name="modal.css"/>
-    <h:outputScript library="js" name="modal.js"/>  
 </ui:composition>

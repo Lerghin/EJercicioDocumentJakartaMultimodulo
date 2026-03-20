@@ -21,7 +21,7 @@ public class DocumentoInterno extends AbstractDocument implements Serializable {
     }
 
     @Override
-    protected String getTipoDocumento() {
+    public String getTipoDocumento() {
         return "INTERNO";
     }
 

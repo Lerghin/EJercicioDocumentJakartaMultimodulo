@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <div class="form-group">
+        <h:outputLabel for="numeroExpediente" value="Número de Expediente:"/>
+        <h:inputText id="numeroExpediente"
+                     value="#{documentoWebController.selected.numeroExpediente}"
+                     required="true"
+                     maxlength="64"/>
+    </div>
+
+    <div class="form-group">
+        <h:outputLabel for="juzgado" value="Juzgado:"/>
+        <h:inputText id="juzgado"
+                     value="#{documentoWebController.selected.juzgado}"
+                     required="true"
+                     maxlength="128"/>
+    </div>
+
+</ui:composition>

@@ -7,15 +7,28 @@
     <h:body>
         <ui:composition template="/view/template/template.xhtml">
             <ui:define name="content">
+
+                <!-- ✅ JS y CSS dentro del ui:define -->
+                <h:outputStylesheet library="css" name="modal.css"/>
+                <h:outputScript library="js" name="modal.js" target="head"/>
+
                 <ui:param name="pageTitle" value="#{global.documentListTitle}"/>
                 <div class="card">
                     <h2>#{global.documentListTitle}</h2>
-                    <div class="stats-bar">#{global.statsLabel}: #{applicationManager.totalDocumentosCreados}</div>
+                    <div class="stats-bar">
+                        #{global.statsLabel}: #{applicationManager.totalDocumentosCreados}
+                    </div>
+
                     <h:form id="listForm">
                         <div class="button-group">
-                            <h:commandButton value="#{global.createLabel}" action="#{documentoWebController.prepareCreate()}" class="btn btn-primary"/>
+                            <h:commandButton
+                                value="#{global.createLabel}"
+                                action="#{documentoWebController.prepareCreate()}"
+                                class="btn btn-primary"/>
                         </div>
-                        <h:dataTable value="#{documentoWebController.items}" var="doc" styleClass="table">
+
+                        <h:dataTable value="#{documentoWebController.items}"
+                                     var="doc" styleClass="table">
                             <h:column>
                                 <f:facet name="header">#{documento.nombreLabel}</f:facet>
                                     #{doc.nombre}
@@ -28,30 +41,40 @@
                                 <f:facet name="header">#{documento.estadoLabel}</f:facet>
                                     #{doc.estado}
                             </h:column>
+
+
                             <h:column>
-                                <f:facet name="header">#{documento.departamentoLabel}</f:facet>
-                                <h:outputText value="#{documentoWebController.esInterno(doc) ? doc.departamento : 'N/A'}" />
+                                <f:facet name="header">Detalle</f:facet>
+                                <h:outputText value="#{doc.detalleListado}"/>
                             </h:column>
+
                             <h:column>
-                                <f:facet name="header"/>
-                                <h:commandButton value="Edit" action="#{documentoWebController.prepareEdit(doc)}" class="btn btn-secondary"/>
+                                <f:facet name="header">Acciones</f:facet>
+                                <h:commandButton
+                                    value="Edit"
+                                    action="#{documentoWebController.prepareEdit(doc)}"
+                                    class="btn btn-secondary"/>
                                 <h:commandButton
                                     value="Detalles"
                                     class="btn btn-info"
-                                    onclick="setTimeout(showModal, 300)">
+                                    type="button">
                                     <f:ajax execute="@this"
                                             listener="#{documentoWebController.prepareDetalle(doc)}"
-                                            render="detailPanel"/>
+                                            render="detailPanel"
+                                            onevent="handleModalEvent"/>
                                 </h:commandButton>
                             </h:column>
                         </h:dataTable>
+
+
                         <h:panelGroup id="detailPanel">
-                            <h:panelGroup rendered="#{documentoWebController.selected != null}">
-                                <ui:include src="/view/documento/fragments/detailModal.xhtml"/>
-                            </h:panelGroup>
+                            <ui:include src="/view/documento/fragments/detailModal.xhtml"/>
                         </h:panelGroup>
+
+
                     </h:form>
                 </div>
+
             </ui:define>
         </ui:composition>
     </h:body>

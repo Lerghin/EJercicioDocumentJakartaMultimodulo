@@ -11,3 +11,8 @@ ALTER TABLE TECDocument
 ADD Proveedor VARCHAR(64) NULL,
     Numero_Referencia VARCHAR(64) NULL,
     curier VARCHAR(64) NULL;
+
+
+ALTER TABLE TECDocument 
+ADD Juzgado VARCHAR(128) NULL,
+    NumeroExpediente VARCHAR(64) NULL;

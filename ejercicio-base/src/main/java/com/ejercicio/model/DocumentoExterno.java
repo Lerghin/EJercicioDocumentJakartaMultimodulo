@@ -39,7 +39,7 @@ public class DocumentoExterno extends AbstractDocument implements Serializable {
     }
 
     @Override
-    protected String getTipoDocumento() {
+    public String getTipoDocumento() {
         return "EXTERNO";
     }
 

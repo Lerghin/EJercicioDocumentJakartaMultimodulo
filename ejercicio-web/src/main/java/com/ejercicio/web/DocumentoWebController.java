@@ -4,6 +4,8 @@ import com.ejercicio.controller.DocumentoJpaController;
 import com.ejercicio.model.AbstractDocument;
 import com.ejercicio.model.DocumentoExterno;
 import com.ejercicio.model.DocumentoInterno;
+import com.ejercicio.controller.TipoDocumentoController;
+import com.ejercicio.model.TipoDocumento;
 import com.ejercicio.singletons.ApplicationManager;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.SessionScoped;
@@ -29,10 +31,12 @@ public class DocumentoWebController implements Serializable {
     private List<AbstractDocument> items = new ArrayList<>();
     private AbstractDocument selected;
     private String tipoDocumento;
+    private TipoDocumentoController tipoDocumentoController;
 
     @PostConstruct
     public void init() {
         jpaController = new DocumentoJpaController(ApplicationManager.getEntityManager());
+        tipoDocumentoController = new TipoDocumentoController(ApplicationManager.getEntityManager());
         loadItems();
     }
 
@@ -66,12 +70,12 @@ public class DocumentoWebController implements Serializable {
 
     public String create() {
         try {
-            
+
             selected.setFecha(new Date());
             if (selected.getEstado() == null) {
                 selected.setEstado("ACTIVO");
             }
-           // selected.getClass().getName();
+            // selected.getClass().getName();
             jpaController.create(selected);
             ApplicationManager.getInstance().registrarDocumentoCreado(selected.getNombre());
             //this.selected = new DocumentoInterno();
@@ -114,7 +118,7 @@ public class DocumentoWebController implements Serializable {
     public String prepareCreate() {
         this.tipoDocumento = "INTERNO";
 
-       instanciarSeleccionado();
+        instanciarSeleccionado();
         // Es vital limpiar también los mensajes de la sesión anterior
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(false);
         return "manage?faces-redirect=true";
@@ -122,15 +126,22 @@ public class DocumentoWebController implements Serializable {
 
     public String prepareEdit(Object obj) {
 
-       if (obj == null) return null;
+        if (obj == null) {
+            return null;
+        }
 
-    this.selected = (AbstractDocument) obj;
+        this.selected = (AbstractDocument) obj;
 
-    // Sincronizamos el String para el ui:include
-    this.tipoDocumento = (this.selected instanceof DocumentoExterno) ? "EXTERNO" : "INTERNO";
+        // Sincronizamos el String para el ui:include
+        this.tipoDocumento = this.selected.getTipoDocumento();
         return "manage?faces-redirect=true";
     }
 
+    public void limpiarSeleccion() {
+        this.selected = null;
+    }
+
+    /*
     public void cambiarTipo() {
         // 1. Guardamos la referencia vieja para no perder los datos comunes
         AbstractDocument datosLlenados = this.selected;
@@ -153,8 +164,28 @@ public class DocumentoWebController implements Serializable {
         // 4. Limpieza de mensajes (Correcto como lo tenías)
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(false);
     }
-    
-    public void prepareDetalle(AbstractDocument doc){
+     */
+    public void cambiarTipo() {
+        AbstractDocument datosAnteriores = this.selected;
+        try {
+            TipoDocumento tipo = tipoDocumentoController.findByCodigo(tipoDocumento);
+            Class<?> clazz = Class.forName(tipo.getClaseJava());
+            this.selected = (AbstractDocument) clazz.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("NO se pudo cambiar de tipo de documento");
+        }
+        if (datosAnteriores != null) {
+            this.selected.setNombre(datosAnteriores.getNombre());
+            this.selected.setEstado(datosAnteriores.getEstado());
+            this.selected.setFecha(datosAnteriores.getFecha());
+        }
+    }
+
+    public List<TipoDocumento> getTiposDocumento() {
+        return tipoDocumentoController.findAll();
+    }
+
+    public void prepareDetalle(AbstractDocument doc) {
         this.selected = doc;
     }
 
